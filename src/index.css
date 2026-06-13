@@ -1,0 +1,178 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   PNG Payroll Pro — Design tokens (Tailwind v4 @theme)
+   Burgundy enterprise dark theme.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-brand: #8b0000; /* primary actions, headers, active nav */
+  --color-brand-dark: #6b0000; /* hover / active */
+  --color-brand-light: #a50000; /* secondary buttons, accents */
+
+  --color-surface: #1a0000; /* sidebar background */
+  --color-surface-hover: #2d0000; /* nav hover */
+  --color-bg: #0f0000; /* app background */
+  --color-card: #1c0a0a; /* card surface */
+  --color-card-2: #230d0d; /* raised card / inputs */
+  --color-line: #3d1515; /* borders, dividers */
+
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --color-info: #2563eb;
+
+  --color-ink: #f5f0f0; /* primary text */
+  --color-muted: #b89898; /* secondary text */
+  --color-faint: #7a5555; /* tertiary / placeholder */
+
+  --color-gold: #c9a84c; /* premium highlights, charts */
+  --color-cream: #e8d5b7; /* highlight text on dark */
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --radius-input: 4px;
+  --radius-card: 4px;
+  --radius-modal: 8px;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+* {
+  border-color: var(--color-line);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Numbers always align */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 6px;
+  border: 2px solid var(--color-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4d1c1c;
+}
+
+/* Inputs autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-ink);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-card-2) inset;
+  caret-color: var(--color-ink);
+}
+
+/* ---------------------------------------------------------------------------
+   Animations
+--------------------------------------------------------------------------- */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-7px);
+  }
+  80% {
+    transform: translateX(7px);
+  }
+}
+.animate-shake {
+  animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fadeInUp 0.25s ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fade {
+  animation: fadeIn 0.2s ease both;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--color-card) 25%, var(--color-card-2) 50%, var(--color-card) 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+/* Smooth default transitions for interactive surfaces */
+button,
+a,
+input,
+select {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
