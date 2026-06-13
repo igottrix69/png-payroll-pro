@@ -13,7 +13,7 @@ export function Card({
   return (
     <div
       className={cn(
-        'rounded-[4px] border border-line bg-card',
+        'rounded-[4px] border border-line bg-card shadow-sm',
         accent && 'border-l-4 border-l-brand',
         className,
       )}
@@ -61,7 +61,7 @@ export function StatCard({
     brand: 'text-brand-light bg-brand/15',
     gold: 'text-gold bg-gold/10',
     success: 'text-success bg-success/10',
-    info: 'text-[#7ab0ff] bg-info/10',
+    info: 'text-info bg-info/10',
   }[tone];
 
   return (

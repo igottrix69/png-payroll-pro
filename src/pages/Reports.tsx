@@ -24,7 +24,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'dept', label: 'Department Cost' },
 ];
 
-const DEPT_COLORS = ['#8B0000', '#C9A84C', '#A50000', '#2563EB', '#16A34A', '#D97706', '#7C3AED'];
+const DEPT_COLORS = ['#3583ff', '#15803d', '#7c3aed', '#0891b2', '#d97706', '#db2777', '#0ea5e9'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export function Reports() {
@@ -329,12 +329,12 @@ function DeptCost({ employees }: { employees: import('@/types').Employee[] }) {
           <div className="h-[280px] w-full px-2 pt-4">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data} margin={{ top: 6, right: 12, bottom: 6, left: 4 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#3D1515" vertical={false} />
-                <XAxis dataKey="dept" tick={{ fill: '#B89898', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#3D1515' }} />
-                <YAxis tickFormatter={(v) => formatPGKShort(v)} tick={{ fill: '#B89898', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#3D1515' }} width={56} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <XAxis dataKey="dept" tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#e2e8f0' }} />
+                <YAxis tickFormatter={(v) => formatPGKShort(v)} tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#e2e8f0' }} width={56} />
                 <Tooltip
-                  cursor={{ fill: 'rgba(139,0,0,0.08)' }}
-                  contentStyle={{ background: '#1C0A0A', border: '1px solid #3D1515', borderRadius: 6, fontSize: 12 }}
+                  cursor={{ fill: 'rgba(53,131,255,0.08)' }}
+                  contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: 12, color: '#0f172a' }}
                   formatter={(v) => [formatPGK(Number(v)), 'Cost']}
                 />
                 <Bar dataKey="cost" radius={[3, 3, 0, 0]} maxBarSize={56} isAnimationActive={false}>

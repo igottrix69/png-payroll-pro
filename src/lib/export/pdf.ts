@@ -4,13 +4,14 @@ import autoTable from 'jspdf-autotable';
 import type { PayrollRun, PayrollLineItem, Company } from '@/types';
 import { formatPGK, formatDate, formatFortnight } from '@/lib/utils';
 
-const BURGUNDY: [number, number, number] = [139, 0, 0];
-const GOLD: [number, number, number] = [201, 168, 76];
-const DARK: [number, number, number] = [40, 30, 30];
-const MUTED: [number, number, number] = [120, 110, 110];
-const LINE: [number, number, number] = [210, 200, 200];
+// Brand palette for the payslip PDF (matches the app's light blue theme).
+const BURGUNDY: [number, number, number] = [53, 131, 255]; // primary blue band
+const GOLD: [number, number, number] = [191, 219, 254]; // soft accent label on blue
+const DARK: [number, number, number] = [15, 23, 42]; // slate-900 body text
+const MUTED: [number, number, number] = [100, 116, 139]; // slate-500
+const LINE: [number, number, number] = [226, 232, 240]; // slate-200 rules
 const WHITE: [number, number, number] = [255, 255, 255];
-const LIGHT: [number, number, number] = [245, 240, 240];
+const LIGHT: [number, number, number] = [241, 245, 249]; // slate-100 zebra/foot
 
 const PAGE_W = 210; // A4 portrait mm
 const MARGIN = 14;

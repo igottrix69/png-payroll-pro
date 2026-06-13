@@ -106,7 +106,7 @@ export function PinLock() {
         className="pointer-events-none absolute inset-0 opacity-60"
         style={{
           background:
-            'radial-gradient(60% 50% at 50% 0%, rgba(139,0,0,0.25) 0%, rgba(15,0,0,0) 70%)',
+            'radial-gradient(60% 50% at 50% 0%, rgba(53,131,255,0.18) 0%, rgba(244,247,251,0) 70%)',
         }}
       />
       <div className="animate-fade-up relative w-full max-w-[360px] rounded-[10px] border border-line bg-card/80 p-7 backdrop-blur">

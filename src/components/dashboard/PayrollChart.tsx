@@ -25,10 +25,10 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<
   return (
     <div className="rounded-[6px] border border-line bg-card px-3 py-2 text-[12px] shadow-xl">
       <div className="mb-1 font-semibold text-ink">{d.label}</div>
-      <Row label="Gross" value={formatPGK(d.gross)} color="#A50000" />
+      <Row label="Gross" value={formatPGK(d.gross)} color="#3583ff" />
       <Row label="SWT" value={formatPGK(d.swt)} color="#D97706" />
-      <Row label="Net pay" value={formatPGK(d.net)} color="#C9A84C" />
-      <Row label="Employees" value={String(d.count)} color="#B89898" />
+      <Row label="Net pay" value={formatPGK(d.net)} color="#15803d" />
+      <Row label="Employees" value={String(d.count)} color="#64748b" />
     </div>
   );
 }
@@ -71,23 +71,23 @@ export function PayrollChart({ runs }: { runs: PayrollRun[] }) {
     <div className="h-[280px] w-full px-2 pt-4">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart data={data} margin={{ top: 6, right: 12, bottom: 6, left: 4 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#3D1515" vertical={false} />
-          <XAxis dataKey="label" tick={{ fill: '#B89898', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#3D1515' }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+          <XAxis dataKey="label" tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={{ stroke: '#e2e8f0' }} />
           <YAxis
             tickFormatter={(v) => formatPGKShort(v)}
-            tick={{ fill: '#B89898', fontSize: 11 }}
+            tick={{ fill: '#64748b', fontSize: 11 }}
             tickLine={false}
-            axisLine={{ stroke: '#3D1515' }}
+            axisLine={{ stroke: '#e2e8f0' }}
             width={56}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(139,0,0,0.08)' }} />
-          <Bar dataKey="gross" fill="#8B0000" radius={[3, 3, 0, 0]} maxBarSize={44} name="Gross" isAnimationActive={false} />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(53,131,255,0.08)' }} />
+          <Bar dataKey="gross" fill="#3583ff" radius={[3, 3, 0, 0]} maxBarSize={44} name="Gross" isAnimationActive={false} />
           <Line
             type="monotone"
             dataKey="net"
-            stroke="#C9A84C"
+            stroke="#15803d"
             strokeWidth={2.5}
-            dot={{ r: 3, fill: '#C9A84C' }}
+            dot={{ r: 3, fill: '#15803d' }}
             name="Net pay"
             isAnimationActive={false}
           />

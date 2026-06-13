@@ -7,7 +7,7 @@ const tones: Record<Tone, string> = {
   success: 'bg-success/15 text-success border-success/30',
   warning: 'bg-warning/15 text-warning border-warning/30',
   danger: 'bg-danger/15 text-danger border-danger/30',
-  info: 'bg-info/15 text-[#7ab0ff] border-info/30',
+  info: 'bg-info/15 text-info border-info/30',
   neutral: 'bg-faint/15 text-muted border-line',
   brand: 'bg-brand/20 text-cream border-brand/40',
   gold: 'bg-gold/15 text-gold border-gold/30',

@@ -108,14 +108,14 @@ export function initials(first: string, last: string): string {
 
 /** Deterministic colour for an avatar/department from a string. */
 const AVATAR_COLORS = [
-  '#8B0000',
-  '#A50000',
-  '#C9A84C',
-  '#2563EB',
-  '#16A34A',
-  '#D97706',
-  '#7C3AED',
-  '#0891B2',
+  '#3583ff',
+  '#0ea5e9',
+  '#15803d',
+  '#7c3aed',
+  '#db2777',
+  '#d97706',
+  '#0891b2',
+  '#2563eb',
 ];
 export function colorFromString(s: string): string {
   let h = 0;

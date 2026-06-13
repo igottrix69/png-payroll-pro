@@ -13,7 +13,7 @@ export function PinDots({ length, filled, error }: { length: number; filled: num
             i < filled
               ? error
                 ? 'border-danger bg-danger'
-                : 'border-gold bg-gold'
+                : 'border-brand bg-brand'
               : 'border-faint/60 bg-transparent',
           )}
         />

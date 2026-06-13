@@ -5,28 +5,28 @@
    Burgundy enterprise dark theme.
 --------------------------------------------------------------------------- */
 @theme {
-  --color-brand: #8b0000; /* primary actions, headers, active nav */
-  --color-brand-dark: #6b0000; /* hover / active */
-  --color-brand-light: #a50000; /* secondary buttons, accents */
+  --color-brand: #3583ff; /* primary actions, headers, active nav */
+  --color-brand-dark: #1f6fe8; /* hover / active */
+  --color-brand-light: #5b9bff; /* secondary buttons, accents */
 
-  --color-surface: #1a0000; /* sidebar background */
-  --color-surface-hover: #2d0000; /* nav hover */
-  --color-bg: #0f0000; /* app background */
-  --color-card: #1c0a0a; /* card surface */
-  --color-card-2: #230d0d; /* raised card / inputs */
-  --color-line: #3d1515; /* borders, dividers */
+  --color-surface: #ffffff; /* sidebar background */
+  --color-surface-hover: #eef4ff; /* nav hover (light blue) */
+  --color-bg: #f4f7fb; /* app background */
+  --color-card: #ffffff; /* card surface */
+  --color-card-2: #eef2f7; /* raised card / inputs */
+  --color-line: #e2e8f0; /* borders, dividers */
 
   --color-success: #16a34a;
   --color-warning: #d97706;
   --color-danger: #dc2626;
   --color-info: #2563eb;
 
-  --color-ink: #f5f0f0; /* primary text */
-  --color-muted: #b89898; /* secondary text */
-  --color-faint: #7a5555; /* tertiary / placeholder */
+  --color-ink: #0f172a; /* primary text */
+  --color-muted: #64748b; /* secondary text */
+  --color-faint: #94a3b8; /* tertiary / placeholder */
 
-  --color-gold: #c9a84c; /* premium highlights, charts */
-  --color-cream: #e8d5b7; /* highlight text on dark */
+  --color-gold: #15803d; /* positive / net-pay highlight (readable green on white) */
+  --color-cream: #1f6fe8; /* accent text on light-blue tints */
 
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
@@ -88,7 +88,7 @@ h4 {
   border: 2px solid var(--color-bg);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4d1c1c;
+  background: #cbd5e1;
 }
 
 /* Inputs autofill */
