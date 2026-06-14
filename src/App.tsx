@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { LogoMark } from '@/components/shared/Logo';
 import { PinLock } from '@/components/pin/PinLock';
+import { LicenseGate } from '@/components/license/LicenseGate';
 import { AppShell } from '@/components/layout/AppShell';
 import { Dashboard } from '@/pages/Dashboard';
 import { Employees } from '@/pages/Employees';
@@ -19,10 +20,13 @@ import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { usePayrollStore } from '@/store/usePayrollStore';
 import { useLeaveStore } from '@/store/useLeaveStore';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useLicenseStore } from '@/store/useLicenseStore';
 
 export default function App() {
   const [ready, setReady] = useState(false);
   const unlocked = useAuthStore((s) => s.unlocked);
+  const license = useLicenseStore((s) => s.status);
+  const refreshLicense = useLicenseStore((s) => s.refresh);
   const hydrateSettings = useSettingsStore((s) => s.hydrate);
   const hydrateEmployees = useEmployeeStore((s) => s.hydrate);
   const hydratePayroll = usePayrollStore((s) => s.hydrate);
@@ -30,6 +34,7 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
+      await refreshLicense();
       const settings = await initializeData();
       hydrateSettings(settings);
       hydrateEmployees();
@@ -37,7 +42,7 @@ export default function App() {
       hydrateLeave();
       setReady(true);
     })();
-  }, [hydrateSettings, hydrateEmployees, hydratePayroll, hydrateLeave]);
+  }, [refreshLicense, hydrateSettings, hydrateEmployees, hydratePayroll, hydrateLeave]);
 
   return (
     <>
@@ -55,10 +60,12 @@ export default function App() {
       />
       {!ready ? (
         <Splash />
+      ) : !license?.valid ? (
+        <LicenseGate />
       ) : !unlocked ? (
         <PinLock />
       ) : (
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route element={<AppShell />}>
               <Route path="/" element={<Dashboard />} />
@@ -73,7 +80,7 @@ export default function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       )}
     </>
   );

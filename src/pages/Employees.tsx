@@ -35,7 +35,9 @@ import { ConfirmDialog } from '@/components/shared/ConfirmDialog';
 import { EmployeeForm } from '@/components/employees/EmployeeForm';
 import type { Employee } from '@/types';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
+import { useLicenseStore } from '@/store/useLicenseStore';
 import { isMissingTFN } from '@/lib/payroll';
+import { employeeCap, BUY_URL, TIER_META } from '@/lib/license';
 import { exportEmployeesXLSX } from '@/lib/export/excel';
 import { formatPGK, cn } from '@/lib/utils';
 
@@ -47,6 +49,11 @@ export function Employees() {
   const navigate = useNavigate();
   const employees = useEmployeeStore((s) => s.employees);
   const setStatus = useEmployeeStore((s) => s.setStatus);
+  const license = useLicenseStore((s) => s.status);
+
+  const cap = employeeCap(license);
+  const activeCount = employees.filter((e) => e.status === 'active').length;
+  const atCap = cap > 0 && activeCount >= cap;
 
   const [search, setSearch] = useState('');
   const [dept, setDept] = useState('all');
@@ -170,7 +177,15 @@ export function Employees() {
     initialState: { pagination: { pageSize: 25 } },
   });
 
-  const openAdd = () => { setEditing(null); setFormOpen(true); };
+  const openAdd = () => {
+    if (atCap) {
+      const tierLabel = license?.payload ? TIER_META[license.payload.tier].label : 'current';
+      toast.error(`${tierLabel} plan limit reached (${cap} active staff). Upgrade to add more.`);
+      return;
+    }
+    setEditing(null);
+    setFormOpen(true);
+  };
 
   return (
     <>
@@ -189,6 +204,25 @@ export function Employees() {
         }
       />
       <PageBody>
+        {cap > 0 && (
+          <div
+            className={cn(
+              'mb-4 flex flex-wrap items-center justify-between gap-2 rounded-[6px] border px-4 py-2.5 text-[12px]',
+              atCap ? 'border-warning/40 bg-warning/10 text-warning' : 'border-line bg-card text-muted',
+            )}
+          >
+            <span>
+              {license?.payload ? TIER_META[license.payload.tier].label : 'Licence'} plan ·{' '}
+              <span className="font-semibold text-ink">{activeCount}</span> of {cap} active staff used
+              {atCap && ' — limit reached'}
+            </span>
+            {atCap && (
+              <Button variant="gold" size="sm" onClick={() => window.open(BUY_URL, '_blank')}>
+                Upgrade plan
+              </Button>
+            )}
+          </div>
+        )}
         <Card className="mb-4 p-3">
           <div className="flex flex-wrap items-center gap-2">
             <div className="relative min-w-[220px] flex-1">

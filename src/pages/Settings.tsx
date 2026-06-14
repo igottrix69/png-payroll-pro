@@ -9,6 +9,8 @@ import {
   Trash2,
   Image as ImageIcon,
   AlertTriangle,
+  BadgeCheck,
+  ShoppingCart,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { TopBar } from '@/components/layout/TopBar';
@@ -21,15 +23,18 @@ import { ConfirmDialog } from '@/components/shared/ConfirmDialog';
 import { LogoMark } from '@/components/shared/Logo';
 import type { Company } from '@/types';
 import { useSettingsStore } from '@/store/useSettingsStore';
+import { useLicenseStore } from '@/store/useLicenseStore';
+import { TIER_META, BUY_URL } from '@/lib/license';
 import { hashPin, verifyPin } from '@/lib/pin';
 import { exportAll, importAll, resetAll, type BackupPayload } from '@/lib/storage';
 import { cn, num } from '@/lib/utils';
 
-type Tab = 'company' | 'pin' | 'tax' | 'data';
+type Tab = 'company' | 'pin' | 'tax' | 'license' | 'data';
 const TABS: { id: Tab; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
   { id: 'company', label: 'Company', icon: Building2 },
   { id: 'pin', label: 'Security PIN', icon: KeyRound },
   { id: 'tax', label: 'Tax & Super', icon: Percent },
+  { id: 'license', label: 'Licence', icon: BadgeCheck },
   { id: 'data', label: 'Data', icon: Database },
 ];
 
@@ -59,6 +64,7 @@ export function Settings() {
             {tab === 'company' && <CompanySettings />}
             {tab === 'pin' && <PinSettings />}
             {tab === 'tax' && <TaxSettings />}
+            {tab === 'license' && <LicenseSettings />}
             {tab === 'data' && <DataSettings />}
           </div>
         </div>
@@ -280,6 +286,105 @@ function TaxSettings() {
         </div>
       </div>
     </Card>
+  );
+}
+
+/* ----------------------------------------------------------------- Licence */
+
+function LicenseSettings() {
+  const status = useLicenseStore((s) => s.status);
+  const activate = useLicenseStore((s) => s.activate);
+  const deactivate = useLicenseStore((s) => s.deactivate);
+  const [key, setKey] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [confirmOff, setConfirmOff] = useState(false);
+
+  const p = status?.payload;
+  const tierLabel = p ? TIER_META[p.tier].label : '—';
+  const capLabel = !p ? '—' : p.maxEmployees === 0 ? 'Unlimited' : `${p.maxEmployees} staff`;
+  const expiryLabel = !p
+    ? '—'
+    : status?.isTrial
+      ? `Trial — ${status.daysLeft ?? 0} day(s) left`
+      : p.expires
+        ? `Expires ${new Date(p.expires).toLocaleDateString()}`
+        : 'Perpetual';
+
+  async function onActivate() {
+    if (!key.trim()) return;
+    setBusy(true);
+    const res = await activate(key);
+    setBusy(false);
+    if (res.valid) {
+      toast.success(`Licence activated — ${res.payload?.company}`);
+      setKey('');
+    } else {
+      toast.error(res.expired ? 'That key has expired' : 'Invalid licence key');
+    }
+  }
+
+  return (
+    <Card>
+      <CardHeader title="Licence" />
+      <div className="space-y-5 p-5">
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[6px] border border-line bg-line sm:grid-cols-4">
+          <Info label="Licensed to" value={p?.company ?? 'Unlicensed'} />
+          <Info label="Plan" value={tierLabel} />
+          <Info label="Staff limit" value={capLabel} />
+          <Info label="Status" value={expiryLabel} />
+        </div>
+
+        {status?.isTrial && (
+          <div className="flex items-center justify-between gap-3 rounded-[6px] border border-warning/30 bg-warning/10 px-4 py-3 text-[12px] text-warning">
+            <span>You're on a free trial (limited to {TIER_META.trial.maxEmployees} staff). Buy a licence to unlock the full app.</span>
+            <Button variant="gold" size="sm" icon={<ShoppingCart size={14} />} onClick={() => window.open(BUY_URL, '_blank')}>
+              Buy
+            </Button>
+          </div>
+        )}
+
+        <div>
+          <FormField label={status?.isTrial ? 'Enter your licence key' : 'Replace licence key'}>
+            <textarea
+              value={key}
+              onChange={(e) => setKey(e.target.value)}
+              placeholder="Paste a licence key…"
+              className="min-h-[80px] w-full rounded-[4px] border border-line bg-card-2 px-3 py-2 font-mono text-[11px] text-ink focus:border-brand-light focus:outline-none focus:ring-2 focus:ring-brand-light/30"
+            />
+          </FormField>
+          <div className="mt-3 flex justify-between">
+            <Button variant="ghost" className="text-danger hover:text-danger" onClick={() => setConfirmOff(true)}>
+              Deactivate this device
+            </Button>
+            <Button onClick={onActivate} loading={busy} disabled={!key.trim()}>
+              Activate
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <ConfirmDialog
+        open={confirmOff}
+        onClose={() => setConfirmOff(false)}
+        onConfirm={() => {
+          deactivate();
+          toast.success('Licence removed from this device');
+        }}
+        danger
+        title="Deactivate licence?"
+        confirmLabel="Deactivate"
+        message="This removes the licence key from this device and returns to the activation screen. Your payroll data is kept. You'll need the key to get back in."
+      />
+    </Card>
+  );
+}
+
+function Info({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-card p-3.5">
+      <div className="text-[11px] uppercase tracking-wide text-faint">{label}</div>
+      <div className="mt-1 text-[13px] font-medium text-ink">{value}</div>
+    </div>
   );
 }
 

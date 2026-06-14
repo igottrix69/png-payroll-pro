@@ -16,6 +16,8 @@ import { Badge } from '@/components/shared/Badge';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useSettingsStore } from '@/store/useSettingsStore';
+import { useLicenseStore } from '@/store/useLicenseStore';
+import { TIER_META } from '@/lib/license';
 
 interface NavItem {
   to: string;
@@ -45,6 +47,7 @@ const sections: NavItem[][] = [
 export function Sidebar() {
   const lock = useAuthStore((s) => s.lock);
   const company = useSettingsStore((s) => s.settings?.company);
+  const license = useLicenseStore((s) => s.status);
 
   return (
     <aside className="flex h-screen w-60 shrink-0 flex-col border-r border-line bg-surface">
@@ -85,7 +88,14 @@ export function Sidebar() {
 
       <div className="border-t border-line px-3 py-3">
         <div className="mb-2 px-2">
-          <div className="text-[10px] uppercase tracking-wide text-faint">Company</div>
+          <div className="flex items-center justify-between">
+            <div className="text-[10px] uppercase tracking-wide text-faint">Company</div>
+            {license?.payload && (
+              <Badge tone={license.isTrial ? 'warning' : 'success'} className="px-1.5 py-0 text-[9px]">
+                {license.isTrial ? `Trial · ${license.daysLeft ?? 0}d` : TIER_META[license.payload.tier].label}
+              </Badge>
+            )}
+          </div>
           <div className="truncate text-[12px] font-medium text-muted">{company?.name ?? '—'}</div>
         </div>
         <button

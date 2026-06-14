@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+release
 *.local
 
 # Editor directories and files
@@ -24,3 +25,7 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Vendor licence signing keys — NEVER commit
+scripts/keys/
+*.jwk.json
