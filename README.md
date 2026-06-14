@@ -66,6 +66,17 @@ The output is `release/PNG Payroll Pro Setup <version>.exe`. (A branded `.ico`
 can be added at `build-assets/icon.ico` and referenced under `build.win.icon` in
 package.json; without it the default Electron icon is used.)
 
+> **OneDrive note:** this project lives in a OneDrive-synced folder, and OneDrive
+> locks `release/` mid-build → `EPERM ... rename win-unpacked`. Build to a path
+> **outside** OneDrive instead:
+>
+> ```bash
+> npm run build
+> npx electron-builder --win -c.directories.output="C:/Users/Ron/png-payroll-pro-dist"
+> ```
+>
+> (or pause OneDrive while running `npm run dist`).
+
 ## Licensing (how you sell it)
 
 The app is gated behind an **offline, signed licence** so a buyer can't freely
