@@ -28,7 +28,7 @@ const tier = arg('tier', 'business');
 const days = arg('days');
 const years = arg('years');
 
-if (!company || !TIER_CAP[tier]) {
+if (!company || TIER_CAP[tier] === undefined) {
   console.error('Usage: node scripts/license-gen.mjs --company "Name" --tier starter|business|enterprise [--days N | --years N]');
   process.exit(1);
 }
