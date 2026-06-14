@@ -28,9 +28,10 @@ function createWindow() {
     win.loadFile(path.join(__dirname, '..', 'dist', 'index.html'));
   }
 
-  // Open any external links (Buy licence, etc.) in the user's real browser.
+  // Open external links in the browser, and mailto: (Buy / Contact to purchase)
+  // in the user's default mail client.
   win.webContents.setWindowOpenHandler(({ url }) => {
-    if (url.startsWith('http')) shell.openExternal(url);
+    if (url.startsWith('http') || url.startsWith('mailto:')) shell.openExternal(url);
     return { action: 'deny' };
   });
 }

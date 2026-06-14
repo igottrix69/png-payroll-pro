@@ -37,7 +37,7 @@ import type { Employee } from '@/types';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useLicenseStore } from '@/store/useLicenseStore';
 import { isMissingTFN } from '@/lib/payroll';
-import { employeeCap, BUY_URL, TIER_META } from '@/lib/license';
+import { employeeCap, purchaseMailto, TIER_META } from '@/lib/license';
 import { exportEmployeesXLSX } from '@/lib/export/excel';
 import { formatPGK, cn } from '@/lib/utils';
 
@@ -217,7 +217,11 @@ export function Employees() {
               {atCap && ' — limit reached'}
             </span>
             {atCap && (
-              <Button variant="gold" size="sm" onClick={() => window.open(BUY_URL, '_blank')}>
+              <Button
+                variant="gold"
+                size="sm"
+                onClick={() => window.open(purchaseMailto({ company: license?.payload?.company }), '_blank')}
+              >
                 Upgrade plan
               </Button>
             )}

@@ -96,18 +96,28 @@ node scripts/license-gen.mjs --company "Acme Trading Ltd" --tier business
 # optional: --years 1  or  --days 365  for a time-limited key
 ```
 
-It prints a licence key — email it to the buyer (or let Lemon Squeezy auto-deliver
-it). They paste it into the Activate screen. The key encodes company + tier +
-staff cap + expiry and is signature-verified; the staff cap is enforced in-app.
+It prints a licence key — email it to the buyer. They paste it into the Activate
+screen. The key encodes company + tier + staff cap + expiry and is
+signature-verified; the staff cap is enforced in-app.
 
 > ⚠️ Client-side licensing deters casual copying — it is not unbreakable DRM.
-> Set your real checkout URL in `BUY_URL` (`src/lib/license.ts`).
 
-## Selling checklist
+## Payments & selling (Papua New Guinea)
 
-1. Take the free public web demo down (or leave it as a capped trial) so it doesn't undercut paid sales.
-2. Pick a paywall: **Lemon Squeezy / Paddle** (accept Visa/Mastercard, auto-deliver the installer + licence key, handle tax, pay out via Wise/Payoneer) — Stripe/PayPal direct may not support PNG-based merchants.
-3. Price (one-off perpetual): **Starter $350 / Business $700 / Enterprise $1,400 USD**, plus optional **$250/yr** updates & support. Edit these in `PLANS` / `ANNUAL_UPDATE_PRICE` (`src/lib/license.ts`).
-4. On each sale: run `license-gen`, send installer + key.
+Stripe, Lemon Squeezy (now Stripe-owned) and PayPal-receiving are **not available
+to PNG-based sellers**. PNG B2B also favours bank transfer over cards. So the
+default sales flow is **manual bank transfer**:
+
+- The in-app **Buy / Upgrade** buttons open a pre-filled "I'd like to purchase"
+  email to `SALES_EMAIL` (`src/lib/license.ts` — change it to your address).
+- Buyer emails you → you reply with bank details + invoice → they pay by transfer
+  → you run `license-gen` and email the key.
+
+For automated card/mobile-money acceptance later, look at **NiuPay**, **Westpac PNG**
+or **BSP** merchant services, or try **Paddle** (verify it pays out to a PNG bank first).
+
+**Checklist:** 1) set `SALES_EMAIL`; 2) confirm prices in `PLANS` / `ANNUAL_UPDATE_PRICE`;
+3) take the open web demo down or leave it as the capped trial; 4) on each sale, run
+`license-gen` and send the installer + key.
 
 Built with [Claude Code](https://claude.com/claude-code).

@@ -199,5 +199,25 @@ export function formatPrice(usd: number): string {
   return `$${usd.toLocaleString('en-US')}`;
 }
 
-/** Where to buy — used by upsell prompts. Your Lemon Squeezy storefront. */
-export const BUY_URL = 'https://pngpayrollpro.lemonsqueezy.com';
+/**
+ * Sales contact for manual purchase (bank transfer + emailed licence key).
+ * CHANGE THIS to your business sales address if you don't want to use a personal one.
+ */
+export const SALES_EMAIL = 'ronflierl9@gmail.com';
+
+/** Builds a pre-filled "I want to buy" email so a prospect can request a licence. */
+export function purchaseMailto(opts?: { tier?: string; company?: string }): string {
+  const subject = 'PNG Payroll Pro — Licence purchase';
+  const planLine = opts?.tier ? `Plan: ${opts.tier}` : 'Plan: (Starter / Business / Enterprise)';
+  const body = [
+    'Hi,',
+    '',
+    "I'd like to purchase a PNG Payroll Pro licence.",
+    '',
+    `Company name: ${opts?.company ?? ''}`,
+    planLine,
+    '',
+    'Please send your bank details and an invoice. Thanks!',
+  ].join('\n');
+  return `mailto:${SALES_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}

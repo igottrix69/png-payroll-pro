@@ -5,7 +5,7 @@ import { LogoMark } from '@/components/shared/Logo';
 import { Button } from '@/components/shared/Button';
 import { Textarea } from '@/components/shared/Input';
 import { useLicenseStore } from '@/store/useLicenseStore';
-import { BUY_URL, TRIAL_DAYS, PLANS, ANNUAL_UPDATE_PRICE, formatPrice } from '@/lib/license';
+import { purchaseMailto, TRIAL_DAYS, PLANS, ANNUAL_UPDATE_PRICE, formatPrice } from '@/lib/license';
 
 export function LicenseGate() {
   const status = useLicenseStore((s) => s.status);
@@ -85,7 +85,7 @@ export function LicenseGate() {
           <Button variant="outline" icon={<Clock size={15} />} onClick={onTrial} disabled={busy || trialUsedUp}>
             {trialUsedUp ? 'Trial used' : `Start ${TRIAL_DAYS}-day trial`}
           </Button>
-          <Button variant="gold" icon={<ShoppingCart size={15} />} onClick={() => window.open(BUY_URL, '_blank')}>
+          <Button variant="gold" icon={<ShoppingCart size={15} />} onClick={() => window.open(purchaseMailto(), '_blank')}>
             Buy a licence
           </Button>
         </div>

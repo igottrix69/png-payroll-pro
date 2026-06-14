@@ -24,7 +24,7 @@ import { LogoMark } from '@/components/shared/Logo';
 import type { Company } from '@/types';
 import { useSettingsStore } from '@/store/useSettingsStore';
 import { useLicenseStore } from '@/store/useLicenseStore';
-import { TIER_META, BUY_URL } from '@/lib/license';
+import { TIER_META, purchaseMailto } from '@/lib/license';
 import { hashPin, verifyPin } from '@/lib/pin';
 import { exportAll, importAll, resetAll, type BackupPayload } from '@/lib/storage';
 import { cn, num } from '@/lib/utils';
@@ -337,7 +337,7 @@ function LicenseSettings() {
         {status?.isTrial && (
           <div className="flex items-center justify-between gap-3 rounded-[6px] border border-warning/30 bg-warning/10 px-4 py-3 text-[12px] text-warning">
             <span>You're on a free trial (limited to {TIER_META.trial.maxEmployees} staff). Buy a licence to unlock the full app.</span>
-            <Button variant="gold" size="sm" icon={<ShoppingCart size={14} />} onClick={() => window.open(BUY_URL, '_blank')}>
+            <Button variant="gold" size="sm" icon={<ShoppingCart size={14} />} onClick={() => window.open(purchaseMailto({ company: p?.company }), '_blank')}>
               Buy
             </Button>
           </div>
