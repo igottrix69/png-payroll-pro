@@ -173,5 +173,31 @@ export function employeeCap(status: LicenseStatus | null): number {
   return status?.payload?.maxEmployees ?? 0;
 }
 
+/* ------------------------------------------------------------------ pricing */
+
+export const PRICE_CURRENCY = 'USD';
+
+export interface Plan {
+  tier: Exclude<LicenseTier, 'trial'>;
+  label: string;
+  staff: string;
+  price: number; // one-off, USD
+}
+
+/** Single source of truth for licence pricing (shown in-app + your checkout). */
+export const PLANS: Plan[] = [
+  { tier: 'starter', label: 'Starter', staff: 'Up to 15 staff', price: 350 },
+  { tier: 'business', label: 'Business', staff: 'Up to 50 staff', price: 700 },
+  { tier: 'enterprise', label: 'Enterprise', staff: 'Unlimited staff', price: 1400 },
+];
+
+/** Optional annual updates & support plan (USD/yr). */
+export const ANNUAL_UPDATE_PRICE = 250;
+
+/** "$1,400" */
+export function formatPrice(usd: number): string {
+  return `$${usd.toLocaleString('en-US')}`;
+}
+
 /** Where to buy — used by upsell prompts. Update to your real checkout URL. */
 export const BUY_URL = 'https://png-payroll-pro.lemonsqueezy.com';

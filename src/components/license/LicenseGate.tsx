@@ -5,7 +5,7 @@ import { LogoMark } from '@/components/shared/Logo';
 import { Button } from '@/components/shared/Button';
 import { Textarea } from '@/components/shared/Input';
 import { useLicenseStore } from '@/store/useLicenseStore';
-import { BUY_URL, TRIAL_DAYS } from '@/lib/license';
+import { BUY_URL, TRIAL_DAYS, PLANS, ANNUAL_UPDATE_PRICE, formatPrice } from '@/lib/license';
 
 export function LicenseGate() {
   const status = useLicenseStore((s) => s.status);
@@ -90,7 +90,25 @@ export function LicenseGate() {
           </Button>
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-1.5 text-[11px] text-faint">
+        <div className="mt-5 rounded-[6px] border border-line bg-card-2 p-3">
+          <div className="mb-2 text-center text-[10px] font-semibold uppercase tracking-wide text-faint">
+            One-off licence — pay once, own it
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-center">
+            {PLANS.map((p) => (
+              <div key={p.tier} className="rounded-[4px] border border-line bg-card px-2 py-2">
+                <div className="text-[11px] text-muted">{p.label}</div>
+                <div className="tnum text-sm font-semibold text-ink">{formatPrice(p.price)}</div>
+                <div className="text-[10px] text-faint">{p.staff}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2 text-center text-[10px] text-faint">
+            + optional {formatPrice(ANNUAL_UPDATE_PRICE)}/yr updates &amp; support
+          </div>
+        </div>
+
+        <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-faint">
           <ShieldCheck size={13} />
           <span>Licences are verified offline — your data never leaves this device</span>
         </div>

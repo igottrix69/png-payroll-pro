@@ -96,7 +96,7 @@ staff cap + expiry and is signature-verified; the staff cap is enforced in-app.
 
 1. Take the free public web demo down (or leave it as a capped trial) so it doesn't undercut paid sales.
 2. Pick a paywall: **Lemon Squeezy / Paddle** (accept Visa/Mastercard, auto-deliver the installer + licence key, handle tax, pay out via Wise/Payoneer) — Stripe/PayPal direct may not support PNG-based merchants.
-3. Price: one-off perpetual licence + optional annual update/support fee.
+3. Price (one-off perpetual): **Starter $350 / Business $700 / Enterprise $1,400 USD**, plus optional **$250/yr** updates & support. Edit these in `PLANS` / `ANNUAL_UPDATE_PRICE` (`src/lib/license.ts`).
 4. On each sale: run `license-gen`, send installer + key.
 
 Built with [Claude Code](https://claude.com/claude-code).
