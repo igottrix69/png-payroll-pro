@@ -199,5 +199,5 @@ export function formatPrice(usd: number): string {
   return `$${usd.toLocaleString('en-US')}`;
 }
 
-/** Where to buy — used by upsell prompts. Update to your real checkout URL. */
-export const BUY_URL = 'https://png-payroll-pro.lemonsqueezy.com';
+/** Where to buy — used by upsell prompts. Your Lemon Squeezy storefront. */
+export const BUY_URL = 'https://pngpayrollpro.lemonsqueezy.com';

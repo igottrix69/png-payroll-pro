@@ -29,3 +29,8 @@ release
 # Vendor licence signing keys — NEVER commit
 scripts/keys/
 *.jwk.json
+
+# Secrets / env — NEVER commit
+.env
+.env.*
+!.env.example
