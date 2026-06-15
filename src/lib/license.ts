@@ -175,28 +175,28 @@ export function employeeCap(status: LicenseStatus | null): number {
 
 /* ------------------------------------------------------------------ pricing */
 
-export const PRICE_CURRENCY = 'USD';
+export const PRICE_CURRENCY = 'PGK';
 
 export interface Plan {
   tier: Exclude<LicenseTier, 'trial'>;
   label: string;
   staff: string;
-  price: number; // one-off, USD
+  price: number; // one-off, PGK (Kina)
 }
 
-/** Single source of truth for licence pricing (shown in-app + your checkout). */
+/** Single source of truth for licence pricing (shown in-app). PGK for PNG bank-transfer sales. */
 export const PLANS: Plan[] = [
-  { tier: 'starter', label: 'Starter', staff: 'Up to 15 staff', price: 350 },
-  { tier: 'business', label: 'Business', staff: 'Up to 50 staff', price: 700 },
-  { tier: 'enterprise', label: 'Enterprise', staff: 'Unlimited staff', price: 1400 },
+  { tier: 'starter', label: 'Starter', staff: 'Up to 15 staff', price: 1500 },
+  { tier: 'business', label: 'Business', staff: 'Up to 50 staff', price: 3000 },
+  { tier: 'enterprise', label: 'Enterprise', staff: 'Unlimited staff', price: 9000 },
 ];
 
-/** Optional annual updates & support plan (USD/yr). */
-export const ANNUAL_UPDATE_PRICE = 250;
+/** Optional annual updates & support plan (PGK/yr). */
+export const ANNUAL_UPDATE_PRICE = 850;
 
-/** "$1,400" */
-export function formatPrice(usd: number): string {
-  return `$${usd.toLocaleString('en-US')}`;
+/** "K 9,000" */
+export function formatPrice(amount: number): string {
+  return `K ${amount.toLocaleString('en-US')}`;
 }
 
 /**
